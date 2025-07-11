@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_accuracy_growth.R
 \name{plot_accuracy_growth}
 \alias{plot_accuracy_growth}
-\title{Plot accuracy or MSE growth over trees}
+\title{Plot performance over trees (OOB and optional test set)}
 \usage{
 plot_accuracy_growth(sim)
 }
@@ -14,5 +14,5 @@ plot_accuracy_growth(sim)
 }\if{html}{\out{</div>}}
 }
 \description{
-Plot accuracy or MSE growth over trees
+Plot performance over trees (OOB and optional test set)
 }

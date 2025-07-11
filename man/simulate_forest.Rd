@@ -7,18 +7,18 @@
 simulate_forest(data, target, ntree = 100, mtry = NULL, test = NULL)
 }
 \arguments{
-\item{data}{data.frame with predictors and target}
+\item{data}{Training data.frame with predictors and target}
 
-\item{target}{name of target column (string)}
+\item{target}{Name of target column (string)}
 
-\item{ntree}{total trees to grow}
+\item{ntree}{Number of trees to grow}
 
-\item{mtry}{variables tried at each split (passed to randomForest)}
+\item{mtry}{Number of variables randomly sampled at each split}
 
-\item{test}{optional test set (same columns as \code{data})}
+\item{test}{Optional test set (must include target column)}
 }
 \value{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{  tibble with tree‑level metrics and the full model
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  tibble with tree-level performance (OOB + test) and model
 }\if{html}{\out{</div>}}
 }
 \description{

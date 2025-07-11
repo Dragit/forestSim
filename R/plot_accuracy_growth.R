@@ -1,30 +1,30 @@
-#' Plot accuracy or MSE growth over trees
-#'
+#' Plot performance over trees (OOB and optional test set)
+#' 
 #' @param sim  Output from simulate_forest()
 #' @return     ggplot object
 #' @export
 plot_accuracy_growth <- function(sim) {
-  # Determine if we're plotting accuracy (classification) or MSE (regression)
-  metric_label <- if ("accuracy" %in% names(sim)) {
-    "Accuracy"
-  } else if ("performance" %in% names(sim)) {
-    if (attr(sim, "rf_model")$type == "classification") {
-      "Accuracy"
-    } else {
-      "MSE"
-    }
-  } else {
-    "Metric"
-  }
+  type <- attr(sim, "task_type")
+  metric_label <- if (type == "classification") "Accuracy" else "MSE"
 
-  metric_column <- if ("accuracy" %in% names(sim)) "accuracy" else "performance"
+  # Reshape for ggplot
+  long <- tidyr::pivot_longer(sim,
+    cols = starts_with("performance"),
+    names_to = "dataset",
+    values_to = "value"
+  )
+  long$dataset <- dplyr::recode(long$dataset,
+    performance_oob = "OOB",
+    performance_test = "Test"
+  )
 
-  ggplot2::ggplot(sim, ggplot2::aes(x = tree_n, y = .data[[metric_column]])) +
-    ggplot2::geom_line(color = "steelblue", linewidth = 1) +
+  ggplot2::ggplot(long, ggplot2::aes(x = tree_n, y = value, color = dataset)) +
+    ggplot2::geom_line(linewidth = 1) +
     ggplot2::theme_minimal() +
     ggplot2::labs(
       title = paste0(metric_label, " over Trees"),
       x = "Number of Trees",
-      y = metric_label
+      y = metric_label,
+      color = "Dataset"
     )
 }
