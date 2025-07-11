@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rhistory$
+^\.RData$
+^vignettes/.*\.html$
+^forestSim\.Rproj$
+^\.Rproj\.user$
