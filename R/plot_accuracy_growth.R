@@ -13,6 +13,10 @@ plot_accuracy_growth <- function(sim) {
     names_to = "dataset",
     values_to = "value"
   )
+
+  # Remove rows with missing performance values (e.g. if no text set is given)
+  long <- dplyr::filter(long, !is.na(value))
+
   long$dataset <- dplyr::recode(long$dataset,
     performance_oob = "OOB",
     performance_test = "Test"
