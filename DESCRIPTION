@@ -1,11 +1,21 @@
 Package: forestSim
-Title: What the Package Does (One Line, Title Case)
+Title: Simulate and Analyze Random Forest Performance Over Tree Growth
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Description: 
+    Provides tools for simulating and evaluating the performance of random forest models 
+    as trees are added. Includes functions to track accuracy or mean squared error (MSE) 
+    over time, run multiple simulations in parallel using `furrr`, and visualize growth 
+    curves with `ggplot2`. Designed for benchmarking, educational use, and model stability analysis.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports:
+    randomForest,
+    dplyr,
+    tidyr,
+    ggplot2,
+    furrr,
+    future
