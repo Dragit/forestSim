@@ -28,7 +28,7 @@ simulate_forest <- function(data, target, ntree = 100, mtry = NULL, test = NULL)
   perf_oob <- if (is.factor(y)) {
     1 - rf$err.rate[, "OOB"] # Accuracy
   } else {
-    rf$mse[-1] # MSE
+    rf$mse # MSE
   }
 
   # Test performance
