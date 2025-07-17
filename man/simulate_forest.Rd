@@ -10,7 +10,7 @@ simulate_forest(
   ntree = 100,
   mtry = NULL,
   test_fraction = NULL,
-  test_frac_seed = 42,
+  test_frac_seed = NULL,
   test = NULL
 )
 }

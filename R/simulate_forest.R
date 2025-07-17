@@ -25,7 +25,7 @@ simulate_forest <- function(data,
                             ntree = 100,
                             mtry = NULL,
                             test_fraction = NULL,
-                            test_frac_seed = 42,
+                            test_frac_seed = NULL,
                             test = NULL
                             ) {
   stopifnot(target %in% names(data))
@@ -33,7 +33,9 @@ simulate_forest <- function(data,
 # Automatically split test set if requested
 if (is.null(test) && !is.null(test_fraction)) {
     stopifnot(test_fraction > 0 && test_fraction < 1)
-    set.seed(test_frac_seed)  # Optional: make reproducible or expose as argument
+  if (!is.null(test_frac_seed)) {
+    set.seed(test_frac_seed)
+  }
     n <- nrow(data)
     test_indices <- sample(n, size = floor(n * test_fraction))
     test <- data[test_indices, ]

@@ -87,19 +87,18 @@ a)  Create a working R package that performs the task it is intended to
     
     
     ``` {r, re-run quick test}
-    library(forestSim)                   # load newly created package
-    
-    sim <- simulate_forest(iris, target = "Species", ntree = 150, test_fraction = 0.3)
-    head(sim)
-    plot_accuracy_growth(sim)                # should open a line plot
-    ``` 
-    
-    
-    ``` {r, run multiple random Forests in paralel}
-    sim_multi <- simulate_forest_multi(iris, target = "Species", ntree = 150)
-    head(sim_multi)
-    plot_accuracy_growth_multi(sim_multi)                # should open a line plot
-    ``` 
+    library(forestSim)            # load our package
+    library(ggplot2)              # Load ggplot2 package
+    # Train the random forest model using the diamonds dataset
+    result <- simulate_forest_multi(
+      data = head(ggplot2::diamonds, n = 1000),
+      n_runs = 4,
+      target = "cut",
+      ntree = 100,
+      test_fraction = 0.5,
+      )
+    plot_accuracy_growth_multi(result)
+    ```
     
     ``` {r, run some more fun simulations}
     
@@ -152,7 +151,6 @@ a)  Create a working R package that performs the task it is intended to
     
     ``` {r, example function}
     library(forestSim)                   # load newly created package
-    plot_accuracy_growth_multi(sim)
     test <- ChickWeight
     sim <- simulate_forest(test, target = "weight", ntree = 150)
     head(sim)

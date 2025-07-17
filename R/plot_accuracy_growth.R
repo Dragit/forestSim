@@ -11,18 +11,24 @@
 #' @examples
 #' # Sample 70% of rows for training
 #' sim <- simulate_forest_multi(
-#'  ChickenWeight, 
+#'  data = ChickWeight, 
 #'  target = "weight", 
 #'  ntree = 150,
 #'  mtry = 2,
 #'  test_fraction = 0.3,
 #'  test_frac_seed = 42
 #' )
-#'  mtry = 2,
-#'  test = test_data
-#' )
 #' # run the funtion to plot the result
 #' plot_accuracy_growth(sim)
+#' # plot another dataset
+#' sim2 <- simulate_forest(
+#'   data = head(ggplot2::diamonds, n = 1000),
+#'   target = "cut",
+#'   ntree = 100,
+#'   mtry = 2,
+#'   test_fraction = 0.5,
+#'   )
+#' plot_accuracy_growth(sim2)
 plot_accuracy_growth <- function(sim) {
   type <- attr(sim, "task_type")
   metric_label <- if (type == "classification") "OBS" else "MSE"

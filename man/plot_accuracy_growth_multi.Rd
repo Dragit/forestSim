@@ -21,14 +21,23 @@ per run.
 \examples{
 # Sample 70\% of rows for training
 sim <- simulate_forest_multi(
- ChickenWeight, 
+ data = ChickWeight, 
  target = "weight", 
  ntree = 150,
  mtry = 2,
  n_runs = 4,
  seeds = c(42, 43, 44, 45),
  test_fraction = 0.3,
- test_frac_seed = 42
 )
 plot_accuracy_growth_multi(sim)
+# plot another dataset
+sim2 <- simulate_forest_multi(
+  data = head(ggplot2::diamonds, n = 1000),
+  n_runs = 4,
+  target = "cut",
+  ntree = 100,
+  mtry = 2,
+  test_fraction = 0.5,
+  )
+plot_accuracy_growth_multi(sim2)
 }

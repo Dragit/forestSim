@@ -5,34 +5,33 @@
 \title{Run multiple random forest simulations in parallel}
 \usage{
 simulate_forest_multi(
-  train,
+  data,
   target,
-  ntree = 50,
-  test = NULL,
+  ntree = 100,
   n_runs = 4,
   seeds = NULL,
-  ...
+  mtry = NULL,
+  test_fraction = NULL,
+  test = NULL
 )
 }
 \arguments{
+\item{data}{Training data.frame with predictors and target}
+
 \item{target}{Name of target column (string)}
 
 \item{ntree}{Number of trees to grow}
 
-\item{test}{Optional test set (must include target column)}
-
 \item{n_runs}{Number of simulations to run (default: 4)}
 
 \item{seeds}{Optional vector of random seeds for each thread; will be generated if NULL}
-
-\item{data}{Training data.frame with predictors and target}
 
 \item{mtry}{Number of variables randomly sampled at each split}
 
 \item{test_fraction}{Optional, float between 1 and 0, that indicated the
 fraction of the datasset to be used as a test}
 
-\item{test_frac_seed}{Seed to make data set split reproducible}
+\item{test}{Optional test set (must include target column)}
 }
 \value{
 A data frame combining all runs, with an added \code{run} column
@@ -42,14 +41,22 @@ This is a wrapper around \code{simulate_forest()} that runs it multiple times in
 }
 \examples{
 # Train 4 random forest model using the simulate_forest function
-result <- simulate_forest_multi(
-  train = iris,
+result1 <- simulate_forest_multi(
+  data = iris,
   target = "Species",
   ntree = 100,
   mtry = 2,
   test_fraction = 0.3,
-  test_frac_seed = 42,
   n_runs = 4,
   seeds = c(42, 43, 44, 45)
 )
+# Train the random forest model using the diamonds dataset
+result2 <- simulate_forest_multi(
+ data = head(ggplot2::diamonds, n = 1000),
+ n_runs = 4,
+ target = "cut",
+ ntree = 100,
+ test_fraction = 0.5,
+ )
+ plot_accuracy_growth_multi(result)
 }
