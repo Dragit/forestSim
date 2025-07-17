@@ -23,11 +23,33 @@ simulate_forest_multi(
 
 \item{n_runs}{Number of simulations to run (default: 4)}
 
-\item{seeds}{Optional vector of random seeds; will be generated if NULL}
+\item{seeds}{Optional vector of random seeds for each thread; will be generated if NULL}
+
+\item{data}{Training data.frame with predictors and target}
+
+\item{mtry}{Number of variables randomly sampled at each split}
+
+\item{test_fraction}{Optional, float between 1 and 0, that indicated the
+fraction of the datasset to be used as a test}
+
+\item{test_frac_seed}{Seed to make data set split reproducible}
 }
 \value{
 A data frame combining all runs, with an added \code{run} column
 }
 \description{
 This is a wrapper around \code{simulate_forest()} that runs it multiple times in parallel.
+}
+\examples{
+# Train 4 random forest model using the simulate_forest function
+result <- simulate_forest_multi(
+  train = iris,
+  target = "Species",
+  ntree = 100,
+  mtry = 2,
+  test_fraction = 0.3,
+  test_frac_seed = 42,
+  n_runs = 4,
+  seeds = c(42, 43, 44, 45)
+)
 }

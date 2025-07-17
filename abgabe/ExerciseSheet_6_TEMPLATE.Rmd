@@ -89,7 +89,7 @@ a)  Create a working R package that performs the task it is intended to
     ``` {r, re-run quick test}
     library(forestSim)                   # load newly created package
     
-    sim <- simulate_forest(iris, target = "Species", ntree = 50)
+    sim <- simulate_forest(iris, target = "Species", ntree = 150, test_fraction = 0.3)
     head(sim)
     plot_accuracy_growth(sim)                # should open a line plot
     ``` 
@@ -149,6 +149,19 @@ a)  Create a working R package that performs the task it is intended to
      * However, your test set is usually smaller and might be easier or less variable than the full training data.
      * Also, your test set may be more "homogeneous" or less noisy in some respects.
     
+    
+    ``` {r, example function}
+    library(forestSim)                   # load newly created package
+    plot_accuracy_growth_multi(sim)
+    test <- ChickWeight
+    sim <- simulate_forest(test, target = "weight", ntree = 150)
+    head(sim)
+    plot_accuracy_growth(sim)                # should open a line plot
+    sim <- simulate_forest_multi(test, target = "weight", ntree = 150)
+    head(sim)
+    plot_accuracy_growth_multi(sim)                # should open a line plot
+    ``` 
+    
 b)  Your R package needs to be installable (test this before submitting)
 
 c)  Your R package should contain at least 2 functions
@@ -198,7 +211,7 @@ b)  To make installation easier, your R package should be in a public
     repository on GitHub. Provide the URL to the GitHub repository
     below:
 
-e.g. `https://github.com/<YOUR_GH_USERNAME>/<PACKAGE_REPOSITORY_NAME>`
+e.g. `https://github.com/Dragit/forestSim/tree/main>`
 
 c)  Your R package should be installable via
     `remotes::install_github()`. Before submitting your solution to this
@@ -206,5 +219,5 @@ c)  Your R package should be installable via
     from GitHub. Provide the command below:
 
 ``` r
-remotes::install_github("<YOUR_GH_USERNAME>/<PACKAGE_REPOSITORY_NAME>")
+remotes::install_github("https://github.com/Dragit/forestSim/tree/main")
 ```

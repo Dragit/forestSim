@@ -15,5 +15,20 @@ A ggplot object
 \description{
 Produces a line plot showing either accuracy or MSE across trees for multiple
 random forest simulations. Each \verb{(run, dataset)} pair is a separate line.
-OOB and Test are shown using different linetypes, but share the same color per run.
+OOB and Test are shown using different linetypes, but share the same color
+per run.
+}
+\examples{
+# Sample 70\% of rows for training
+sim <- simulate_forest_multi(
+ ChickenWeight, 
+ target = "weight", 
+ ntree = 150,
+ mtry = 2,
+ n_runs = 4,
+ seeds = c(42, 43, 44, 45),
+ test_fraction = 0.3,
+ test_frac_seed = 42
+)
+plot_accuracy_growth_multi(sim)
 }
