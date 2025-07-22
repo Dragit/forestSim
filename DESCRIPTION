@@ -1,13 +1,18 @@
 Package: forestSim
 Title: Simulate and Analyze Random Forest Performance Over Tree Growth
-Version: 0.0.0.9000
+Version: 1.0.0.0000
 Authors@R: 
-    person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+    c(
+      person("Josef", "redacted", email = "redacted@redacted.red", role = c("aut")),
+      person("Marc", "redacted", email = "redacted@redacted.red", role = c("aut")),
+      person("Clemens", "redacted", email = "redacted@redacted.red", role = c("aut", "cre"))
+    )
 Description: 
     Provides tools for simulating and evaluating the performance of random forest models 
-    as trees are added. Includes functions to track accuracy or mean squared error (MSE) 
-    over time, run multiple simulations in parallel using `furrr`, and visualize growth 
-    curves with `ggplot2`. Designed for benchmarking, educational use, and model stability analysis.
+    as trees are added. Includes a function that tracks accuracy (1 - OOB-Error) or mean squared error (MSE) 
+    over time, run multiple simulations in parallel using `furrr`, and visualize randomforest growth 
+    curves with `ggplot2`.  Make use of custom test sets, to improve feedback even further.
+    Designed for benchmarking, educational use, and model stability analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

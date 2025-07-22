@@ -1,15 +1,52 @@
-#' Incrementally train a random forest and record performance
+#' Incrementally train a random forest and record performance with OOB-Accurracy
+#' (1 - OOB-Error) (OOB-Error = Out-of-Bag-Error)
 #'
-#' @param data   Training data.frame with predictors and target
-#' @param target Name of target column (string)
-#' @param ntree  Number of trees to grow
-#' @param mtry   Number of variables randomly sampled at each split
-#' @param test   Optional test set (must include target column)
+#' @param data            Training data.frame with predictors and target
+#' @param target          Name of target column (string)
+#' @param ntree           Number of trees to grow
+#' @param mtry            Number of variables randomly sampled at each split
+#' @param test            Optional test set (must include target column), for
+#'                        testing the forest with seperate testing data.
+#'                        Excludes use of (test_fraction) parameter!
+#' @param test_fraction   Optional, float between 1 and 0, that indicated the 
+#'                        fraction of the datasset to be used as a test
+#'                        Excludes use of (test) parameter!
+#' @param test_frac_seed  Optional seed to make data set split reproducible
+#'                        Excludes use of (test) parameter, requires 
+#'                        (test_fraction)!
 #' @return       tibble with tree-level performance (OOB + test) and model
 #' @export
-simulate_forest <- function(data, target, ntree = 100, mtry = NULL, test = NULL) {
+#' @examples
+#' # Train the random forest model using the simulate_forest function
+#' result <- simulate_forest(
+#'   data = iris,
+#'   target = "Species",
+#'   ntree = 100,
+#'   mtry = 2,
+#'   test_fraction = 0.3,
+#'   test_frac_seed = 42
+#' )
+simulate_forest <- function(data,
+                            target,
+                            ntree = 100,
+                            mtry = NULL,
+                            test_fraction = NULL,
+                            test_frac_seed = NULL,
+                            test = NULL
+                            ) {
   stopifnot(target %in% names(data))
 
+# Automatically split test set if requested
+if (is.null(test) && !is.null(test_fraction)) {
+    stopifnot(test_fraction > 0 && test_fraction < 1)
+  if (!is.null(test_frac_seed)) {
+    set.seed(test_frac_seed)
+  }
+    n <- nrow(data)
+    test_indices <- sample(n, size = floor(n * test_fraction))
+    test <- data[test_indices, ]
+    data <- data[-test_indices, ]
+  }
   # Prepare training data
   y <- data[[target]]
   x <- data[setdiff(names(data), target)]
@@ -28,7 +65,7 @@ simulate_forest <- function(data, target, ntree = 100, mtry = NULL, test = NULL)
   perf_oob <- if (is.factor(y)) {
     1 - rf$err.rate[, "OOB"] # Accuracy
   } else {
-    rf$mse[-1] # MSE
+    rf$mse # MSE
   }
 
   # Test performance

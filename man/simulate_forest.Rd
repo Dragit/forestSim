@@ -2,9 +2,18 @@
 % Please edit documentation in R/simulate_forest.R
 \name{simulate_forest}
 \alias{simulate_forest}
-\title{Incrementally train a random forest and record performance}
+\title{Incrementally train a random forest and record performance with OOB-Accurracy
+(1 - OOB-Error) (OOB-Error = Out-of-Bag-Error)}
 \usage{
-simulate_forest(data, target, ntree = 100, mtry = NULL, test = NULL)
+simulate_forest(
+  data,
+  target,
+  ntree = 100,
+  mtry = NULL,
+  test_fraction = NULL,
+  test_frac_seed = NULL,
+  test = NULL
+)
 }
 \arguments{
 \item{data}{Training data.frame with predictors and target}
@@ -15,12 +24,34 @@ simulate_forest(data, target, ntree = 100, mtry = NULL, test = NULL)
 
 \item{mtry}{Number of variables randomly sampled at each split}
 
-\item{test}{Optional test set (must include target column)}
+\item{test_fraction}{Optional, float between 1 and 0, that indicated the
+fraction of the datasset to be used as a test
+Excludes use of (test) parameter!}
+
+\item{test_frac_seed}{Optional seed to make data set split reproducible
+Excludes use of (test) parameter, requires
+(test_fraction)!}
+
+\item{test}{Optional test set (must include target column), for
+testing the forest with seperate testing data.
+Excludes use of (test_fraction) parameter!}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  tibble with tree-level performance (OOB + test) and model
 }\if{html}{\out{</div>}}
 }
 \description{
-Incrementally train a random forest and record performance
+Incrementally train a random forest and record performance with OOB-Accurracy
+(1 - OOB-Error) (OOB-Error = Out-of-Bag-Error)
+}
+\examples{
+# Train the random forest model using the simulate_forest function
+result <- simulate_forest(
+  data = iris,
+  target = "Species",
+  ntree = 100,
+  mtry = 2,
+  test_fraction = 0.3,
+  test_frac_seed = 42
+)
 }
