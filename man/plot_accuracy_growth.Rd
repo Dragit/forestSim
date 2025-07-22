@@ -17,6 +17,11 @@ plot_accuracy_growth(sim)
 Produces a line plot showing either accuracy or MSE across trees for a
 random forest simulation.
 }
+\details{
+MSE = Mean Squared Error;
+OOB-Accurracy = (1 - OOB-Error);
+OOB-Error = Out-of-Bag-Error
+}
 \examples{
 # Sample 70\% of rows for training
 sim <- simulate_forest_multi(

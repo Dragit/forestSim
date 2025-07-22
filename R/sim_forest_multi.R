@@ -3,6 +3,10 @@
 #' This is a wrapper around `simulate_forest()` that runs it multiple times in 
 #' parallel.
 #'
+#' MSE = Mean Squared Error;  
+#' OOB-Accurracy = (1 - OOB-Error);  
+#' OOB-Error = Out-of-Bag-Error
+#'
 #' @param n_runs  Number of simulations to run (default: 4)
 #' @param seeds           Optional vector of random seeds for each thread; will 
 #'                        be generated if NULL, this does also influence the 
@@ -33,15 +37,28 @@
 #'   n_runs = 4,
 #'   seeds = c(42, 43, 44, 45)
 #' )
-#'# Train the random forest model using the diamonds dataset
-#'result2 <- simulate_forest_multi(
+#' # Train the random forest model using the diamonds dataset -------
+#' result2 <- simulate_forest_multi(
 #'  data = head(ggplot2::diamonds, n = 1000),
 #'  n_runs = 4,
 #'  target = "cut",
 #'  ntree = 100,
 #'  test_fraction = 0.5,
 #'  )
-#'  plot_accuracy_growth_multi(result)
+#' # Train a model using custom test data ---------------------------
+#' # Set a seed for reproducibility
+#' set.seed(42)
+#' 
+#' dataSet <- head(ggplot2::diamonds, 10000)
+#' 
+#' # Create a random sample of indices for the training set (50% of the data)
+#' train_indices <- sample(1:nrow(dataSet), size = 0.5 * nrow(dataSet))
+#' 
+#' # Split the dataset into training and testing sets
+#' train_set <- dataSet[train_indices, ]
+#' test_set <- dataSet[-train_indices, ]
+#' 
+#' sim2 <- simulate_forest_multi(train_set, target = "cut", ntree = 50, test = test_set)
 simulate_forest_multi <- function(data, 
                                   target, 
                                   ntree = 100,

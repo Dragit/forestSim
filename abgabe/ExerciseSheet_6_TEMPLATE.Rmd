@@ -1,7 +1,7 @@
 ---
 title: "Exercise #06"
 subtitle: "Fortgeschrittene Statistische Software für NF"
-author: "Name (Martrikelnummer), Name (Martrikelnummer), ..."
+author: "Clemens (redacted for github), Mark (redacted for github), Joseph (redacted for github)
 date: "`r Sys.Date()`"
 output: distill::distill_article
 ---
@@ -50,104 +50,6 @@ you for participating in the course!
 ### Functionality
 
 a)  Create a working R package that performs the task it is intended to
-    do
-    
-    ```{r, install required packages}
-    # 0) In a clean R session ----
-    #install.packages(c("devtools", "roxygen2", "randomForest", "ggplot2",
-    #                  "dplyr", "tibble", "gganimate", "magrittr"))
-    
-    ```
-    
-    ```{r, create package}
-    # 1) Create the skeleton in a new folder
-    setwd("/home/clemi/Documents/Uni/4Semester/statsoft2/gradedExercises/06/forestSim/")
-    # usethis::create_package("./forestSim")   # first install don't use it
-    unloadNamespace("forestSim")
-    
-    # 2) Drop the files shown above into that folder
-    #    (or copy‑paste them in RStudio's file explorer)
-    
-    # 3) Document & install
-    devtools::document("../forestSim")
-    devtools::install("../forestSim")
-    
-    # 4) Quick smoke test
-    library(forestSim)                   # load newly created package
-    
-    sim <- simulate_forest(iris, target = "Species", ntree = 50)
-    head(sim)
-    plot_accuracy_growth(sim)                # should open a line plot
-    
-    # 5) (Optional) knit the demo vignette
-    # devtools::build_vignettes("./forestSim")
-    # browseVignettes("forestSim")
-    
-    ```
-    
-    
-    ``` {r, re-run quick test}
-    library(forestSim)                   # load newly created package
-    
-    sim <- simulate_forest(iris, target = "Species", ntree = 50)
-    head(sim)
-    plot_accuracy_growth(sim)                # should open a line plot
-    ``` 
-    
-    
-    ``` {r, run multiple random Forests in paralel}
-    sim_multi <- simulate_forest_multi(iris, target = "Species", ntree = 150)
-    head(sim_multi)
-    plot_accuracy_growth_multi(sim_multi)                # should open a line plot
-    ``` 
-    
-    ``` {r, run some more fun simulations}
-    
-    library(forestSim)            # load our package
-    library(ggplot2)              # Load ggplot2 package
-    
-    # Set a seed for reproducibility
-    set.seed(42)
-    
-    dataSet <- head(diamonds, 10000)
-    
-    # Create a random sample of indices for the training set (50% of the data)
-    train_indices <- sample(1:nrow(dataSet), size = 0.5 * nrow(dataSet))
-    
-    # Split the dataset into training and testing sets
-    train_set <- dataSet[train_indices, ]
-    test_set <- dataSet[-train_indices, ]
-    
-    # Check the dimensions of the splits
-    trainCount <- dim(train_set)  # Should be approximately half of the total rows
-    testCount <- dim(test_set)   # Should also be approximately half of the total rows
-    
-    # Optionally, check the first few rows of each set
-    head(train_set)
-    head(test_set)    
-    
-    # uncommment to predict the price
-    # sim2 <- simulate_forest(train_set, target = "price", ntree = 50, test = test_set)
-    # find a model to predict the 
-    sim2 <- simulate_forest_multi(train_set, target = "cut", ntree = 50, test = test_set)
-    head(sim2)
-    plot_accuracy_growth_multi(sim2)                # should open a line plot
-    #sim <- simulate_forest(cars, target = "Species", ntree = 50)
-    #head(sim)
-    #plot_accuracy_growth(sim)                # should open a line plot
-    ```
-  1. What is OOB (Out-Of-Bag) error?
-  
-     * Each tree in a random forest is trained on a bootstrap sample (~63% of training data).
-     * The OOB samples are the ~37% left out from that tree’s training.
-     * OOB error is computed by predicting these OOB samples using that tree — no peeking at them during training.
-     * It’s an internal, honest error estimate on the training data.
-  
-  2. What is Test set error?
-  
-     * Test set contains data points completely separate and independent from training.
-     * However, your test set is usually smaller and might be easier or less variable than the full training data.
-     * Also, your test set may be more "homogeneous" or less noisy in some respects.
     
 b)  Your R package needs to be installable (test this before submitting)
 
@@ -166,45 +68,84 @@ f)  The `DESCRIPTION` file of your package should be properly formatted
     and contain all the required dependencies of your package. It should
     also provide an accurate `Title` and `Description` for your package.
 
-### Possible reasons why test accuracy > OOB accuracy even with proper splitting
-
-* Full Forest vs. OOB Predictions
-* OOB accuracy is computed tree-by-tree using only the subset of trees that did not see each sample (out-of-bag trees).
-* Test accuracy is computed using the entire forest — all trees — making predictions more stable and usually better.
-
-In other words:
-
-* OOB is a per-tree partial prediction.
-* Test is a full ensemble prediction.
-
-This difference means test predictions generally have lower variance and better accuracy.
-
-* Size and Distribution of Test Set
-* Even a random split can lead to some random variation in difficulty.
-* If your test subset is smaller or has less variability, accuracy can appear artificially higher.
-* Also, if the training data is very noisy or has outliers, OOB error may reflect that noise more strongly.
-* OOB Error is a Conservative Estimate
-* OOB error is known to be a slightly pessimistic but unbiased estimate of true test error.
-* It’s a built-in “cross-validation” but with fewer trees voting per sample.
-* Test set evaluation uses all trees for each sample and hence has lower error variance.
 
 ### Submission
 
-a)  Briefly describe in one - two sentences what your R package does and
-    why you decided to choose this functionality. This is just intended
-    to give us some context to better understand the package.
+a) Briefly describe in one - two sentences what your R package does and
+   why you decided to choose this functionality. This is just intended
+   to give us some context to better understand the package.
+   
+   To aid our current studies in Machine learning we decided to create an interactive tool for visualizing how a random forest grows and gets better with each added Tree.  
+   We wanted to create an easy way to explore performance of random-forest ML-models on a multitude of different data sets, while playing around with test sets and model parameters, while potentially even unlocking multithreaded performance of our computers.
 
-b)  To make installation easier, your R package should be in a public
-    repository on GitHub. Provide the URL to the GitHub repository
-    below:
+b) To make installation easier, your R package should be in a public
+   repository on GitHub. Provide the URL to the GitHub repository
+   below:
 
-e.g. `https://github.com/<YOUR_GH_USERNAME>/<PACKAGE_REPOSITORY_NAME>`
+   e.g. `https://github.com/<YOUR_GH_USERNAME>/<PACKAGE_REPOSITORY_NAME>`
 
-c)  Your R package should be installable via
-    `remotes::install_github()`. Before submitting your solution to this
-    exercise sheet please test whether you can install your R package
-    from GitHub. Provide the command below:
+c) Your R package should be installable via
+   `remotes::install_github()`. Before submitting your solution to this
+   exercise sheet please test whether you can install your R package
+   from GitHub. Provide the command below:
 
-``` r
-remotes::install_github("<YOUR_GH_USERNAME>/<PACKAGE_REPOSITORY_NAME>")
-```
+    ``` {r}
+    remotes::install_github("<YOUR_GH_USERNAME>/<PACKAGE_REPOSITORY_NAME>")
+    ```
+
+### Useful for the Authors
+
+    ```{r, install required packages}
+    # 0) In a clean R session ----
+    # install.packages(c("devtools", "roxygen2", "randomForest", "ggplot2",
+    #                   "dplyr", "tibble", "magrittr"))
+    ```
+    
+    ```{r, rebuild package from scratch}
+    # 1) Create the skeleton in a new folder
+    
+    setwd("/home/clemi/Documents/Uni/Info/4Semester/statsoft2/gradedExercises/06/forestSim/")
+    unloadNamespace("forestSim")
+    
+    # 2) Drop the files shown above into that folder
+    #    (or copy‑paste them in RStudio's file explorer)
+    
+    # 3) Document & install
+    
+    # devtools::document("../forestSim")
+    # devtools::install("../forestSim")
+    
+    # 4) Quick smoke test
+    
+    # library(forestSim)                   # load newly created package
+    sim <- simulate_forest(iris, target = "Species", ntree = 50)
+    head(sim)
+    plot_accuracy_growth(sim)            # should open a line plot
+    
+    ```
+
+
+    ```{r, dry run}
+    # 1) Quick smoke test
+    library(forestSim)                   # load newly created package
+    sim <- simulate_forest(
+     data = ChickWeight, 
+     target = "weight", 
+     ntree = 150,
+     mtry = 2,
+     test_fraction = 0.3,
+     test_frac_seed = 42
+    )
+    plot_accuracy_growth(sim)
+    
+    # 2) Quick smoke test2
+    sim2 <- simulate_forest_multi(
+      data = head(ggplot2::diamonds, n = 1000),
+      n_runs = 4,
+      target = "cut",
+      ntree = 100,
+      mtry = 2,
+      test_fraction = 0.5,
+      )
+    plot_accuracy_growth_multi(sim2)    
+    ```

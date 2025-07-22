@@ -1,7 +1,12 @@
 #' Plot performance over trees (OOB-Accuracy or MSE and optional test set)
 #' 
 #' Produces a line plot showing either accuracy or MSE across trees for a
-#' random forest simulation. 
+#' random forest simulation.
+#'
+#' MSE = Mean Squared Error;  
+#' OOB-Accurracy = (1 - OOB-Error);  
+#' OOB-Error = Out-of-Bag-Error
+#'
 #' @param sim  Output from simulate_forest()
 #' @return     ggplot object
 #' @export

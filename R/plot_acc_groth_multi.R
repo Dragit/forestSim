@@ -5,6 +5,10 @@
 #' OOB-Accuracy and Test (if used) are shown using different linetypes, but 
 #' share the same color per run.
 #'
+#' MSE = Mean Squared Error;  
+#' OOB-Accurracy = (1 - OOB-Error);  
+#' OOB-Error = Out-of-Bag-Error
+#'
 #' @param sim_multi Output from `simulate_forest_multi()`
 #'
 #' @return A ggplot object

@@ -18,6 +18,11 @@ random forest simulations. Each \verb{(run, dataset)} pair is a separate line.
 OOB-Accuracy and Test (if used) are shown using different linetypes, but
 share the same color per run.
 }
+\details{
+MSE = Mean Squared Error;
+OOB-Accurracy = (1 - OOB-Error);
+OOB-Error = Out-of-Bag-Error
+}
 \examples{
 # Sample 70\% of rows for training
 sim <- simulate_forest_multi(

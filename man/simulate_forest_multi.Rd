@@ -45,6 +45,11 @@ A data frame combining all runs, with an added \code{run} column
 This is a wrapper around \code{simulate_forest()} that runs it multiple times in
 parallel.
 }
+\details{
+MSE = Mean Squared Error;
+OOB-Accurracy = (1 - OOB-Error);
+OOB-Error = Out-of-Bag-Error
+}
 \examples{
 # Train 4 random forest model using the simulate_forest function
 result1 <- simulate_forest_multi(
@@ -56,7 +61,7 @@ result1 <- simulate_forest_multi(
   n_runs = 4,
   seeds = c(42, 43, 44, 45)
 )
-# Train the random forest model using the diamonds dataset
+# Train the random forest model using the diamonds dataset -------
 result2 <- simulate_forest_multi(
  data = head(ggplot2::diamonds, n = 1000),
  n_runs = 4,
@@ -64,5 +69,18 @@ result2 <- simulate_forest_multi(
  ntree = 100,
  test_fraction = 0.5,
  )
- plot_accuracy_growth_multi(result)
+# Train a model using custom test data ---------------------------
+# Set a seed for reproducibility
+set.seed(42)
+
+dataSet <- head(ggplot2::diamonds, 10000)
+
+# Create a random sample of indices for the training set (50\% of the data)
+train_indices <- sample(1:nrow(dataSet), size = 0.5 * nrow(dataSet))
+
+# Split the dataset into training and testing sets
+train_set <- dataSet[train_indices, ]
+test_set <- dataSet[-train_indices, ]
+
+sim2 <- simulate_forest_multi(train_set, target = "cut", ntree = 50, test = test_set)
 }

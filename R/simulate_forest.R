@@ -1,5 +1,12 @@
-#' Incrementally train a random forest and record performance with OOB-Accurracy
-#' (1 - OOB-Error) (OOB-Error = Out-of-Bag-Error)
+#' Incrementally train a random forest and record performance
+#'
+#' Function for exploring how adding trees to forest affects model performance.
+#' Use of a test set is useful for getting an even better insight into 
+#' performance  
+#'
+#' MSE = Mean Squared Error;  
+#' OOB-Accurracy = (1 - OOB-Error);  
+#' OOB-Error = Out-of-Bag-Error
 #'
 #' @param data            Training data.frame with predictors and target
 #' @param target          Name of target column (string)

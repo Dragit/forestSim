@@ -2,8 +2,7 @@
 % Please edit documentation in R/simulate_forest.R
 \name{simulate_forest}
 \alias{simulate_forest}
-\title{Incrementally train a random forest and record performance with OOB-Accurracy
-(1 - OOB-Error) (OOB-Error = Out-of-Bag-Error)}
+\title{Incrementally train a random forest and record performance}
 \usage{
 simulate_forest(
   data,
@@ -41,8 +40,14 @@ Excludes use of (test_fraction) parameter!}
 }\if{html}{\out{</div>}}
 }
 \description{
-Incrementally train a random forest and record performance with OOB-Accurracy
-(1 - OOB-Error) (OOB-Error = Out-of-Bag-Error)
+Function for exploring how adding trees to forest affects model performance.
+Use of a test set is useful for getting an even better insight into
+performance
+}
+\details{
+MSE = Mean Squared Error;
+OOB-Accurracy = (1 - OOB-Error);
+OOB-Error = Out-of-Bag-Error
 }
 \examples{
 # Train the random forest model using the simulate_forest function

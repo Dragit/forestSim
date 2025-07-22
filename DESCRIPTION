@@ -8,11 +8,13 @@ Authors@R:
       person("Clemens", "redacted", email = "redacted@redacted.red", role = c("aut", "cre"))
     )
 Description: 
-    Provides tools for simulating and evaluating the performance of random forest models 
-    as trees are added. Includes a function that tracks accuracy (1 - OOB-Error) or mean squared error (MSE) 
-    over time, run multiple simulations in parallel using `furrr`, and visualize randomforest growth 
-    curves with `ggplot2`.  Make use of custom test sets, to improve feedback even further.
-    Designed for benchmarking, educational use, and model stability analysis.
+    Provides tools for simulating and evaluating the performance of random forest 
+    models predicting values of categorial and continual parameters. As trees 
+    are added. Includes a function that tracks accuracy (1 - OOB-Error) or mean 
+    squared error (MSE) over time, run multiple simulations in parallel using 
+    `furrr`, and visualize randomforest growth curves with `ggplot2`.  
+    Make use of custom test sets, to improve feedback even further. Designed for 
+    benchmarking, educational use, and model stability analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
